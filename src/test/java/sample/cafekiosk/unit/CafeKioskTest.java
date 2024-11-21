@@ -1,5 +1,6 @@
 package sample.cafekiosk.unit;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import sample.cafekiosk.unit.beverage.Americano;
 import sample.cafekiosk.unit.beverage.Latte;
@@ -21,6 +22,8 @@ class CafeKioskTest {
         System.out.println(">>> 담긴 음료 : " + cafeKiosk.getBeverages().get(0).getName());
     }
 
+//    @DisplayName("음료 1개 추가 테스트")
+    @DisplayName("음료 1개를 추가하면 주문 목록에 담긴다.")
     @Test
     void add() throws Exception {
         CafeKiosk cafeKiosk = new CafeKiosk();
@@ -77,6 +80,24 @@ class CafeKioskTest {
         assertThat(cafeKiosk.getBeverages()).isEmpty();
     }
 
+    @DisplayName("주문 목록에 담긴 상품들의 총 금액을 계산할 수 있다.")
+    @Test
+    void calculate_total_price() {
+        //given
+        CafeKiosk cafeKiosk = new CafeKiosk();
+        Americano americano = new Americano();
+        Latte latte = new Latte();
+
+        cafeKiosk.add(americano);
+        cafeKiosk.add(latte);
+
+        //when
+        int totalPrice = cafeKiosk.calculateTotalPrice();
+
+        //then
+        assertThat(totalPrice).isEqualTo(8500);
+    }
+
     @Test
     void create_order() throws Exception {
         CafeKiosk cafeKiosk = new CafeKiosk();
@@ -91,17 +112,20 @@ class CafeKioskTest {
 
     @Test
     void create_order_with_current_time() {
+        //given : 시나리오 진행에 필요한 모든 준비 과정(객체 생성, 의존성 주입 등)
         CafeKiosk cafeKiosk = new CafeKiosk();
         Americano americano = new Americano();
-
         cafeKiosk.add(americano);
 
+        //when : 시나리오를 진행할 행위
         Order order = cafeKiosk.createOrder(LocalDateTime.of(2024, 11, 21, 10, 0));
 
+        //then : 시나리오를 완료한 이후의 결과 검증
         assertThat(order.getBeverages()).hasSize(1);
         assertThat(order.getBeverages().get(0).getName()).isEqualTo("아메리카노");
     }
 
+    @DisplayName("영업시간 이전에 주문하면 주문이 불가능하다.")
     @Test
     void create_order_with_outside_open_time() throws Exception {
         CafeKiosk cafeKiosk = new CafeKiosk();
