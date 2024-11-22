@@ -2,7 +2,6 @@ package sample.cafekiosk.spring.domain.product;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import sample.cafekiosk.spring.api.service.product.response.ProductResponse;
 
 import java.util.List;
 
