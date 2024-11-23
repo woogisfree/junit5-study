@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ProductRepository extends JpaRepository<sample.cafekiosk.spring.domain.product.Product, Long> {
+public interface ProductRepository extends JpaRepository<Product, Long> {
 
     /**
      * select *
